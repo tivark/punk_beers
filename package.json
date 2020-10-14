@@ -1,0 +1,14 @@
+{
+  "name": "punk_beers",
+  "version": "1.0.0",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tivark/punk_beers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tivark/punk_beers/issues"
+  },
+  "homepage": "https://github.com/tivark/punk_beers#readme"
+}
