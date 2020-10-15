@@ -3,8 +3,9 @@ export default class BeerApiService {
     this.URL = url;
   }
 
-  async get(parameters = '') {
-    const response = await fetch(this.URL);
+  async get(params = '') {
+    const requestUrl = this.URL + params;
+    const response = await fetch(requestUrl);
     if (response.status === 200) {
       const data = await response.json();
       return data

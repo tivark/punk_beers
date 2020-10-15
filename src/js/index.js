@@ -9,6 +9,10 @@ async function getBeerData() {
   const parrentNode = document.querySelector('.main-wrapper');
   const itemsBox = new ItemsBox(parrentNode, data);
   itemsBox.renderElements();
+  setTimeout(()=>{
+    itemsBox.sortByAbv();
+    itemsBox.rerender();
+  }, 5000)
 }
 
 getBeerData();

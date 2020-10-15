@@ -1,0 +1,59 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Open Sans', sans-serif;
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.beer-item {
+    width: 21%;
+    margin-bottom: 2.5em;
+}
+
+.beer-item__name {
+    font-size: 1.2em;
+    font-weight: 700;
+    min-height: 2.7em;
+    margin-bottom: .5em;
+}
+
+.berr-item__image-wrapper {
+    width: 100%;
+    height: 250px;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.beer-item__image {
+    height: 100%;
+    margin: 0 auto;
+}
+.beer-item__description-label{
+    font-weight: 700;
+}
+.beer-item__ibu{
+    margin-bottom: 1em;
+}
+
+.beer-item__description {
+    height: 10em;
+    overflow: auto;
+    margin-bottom: 1em;
+}
+
+.beer-item__favorite-button{
+    border: solid #000000 1px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    position: relative;
+}
