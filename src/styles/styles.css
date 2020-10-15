@@ -4,11 +4,81 @@ html {
     padding: 0;
     font-family: 'Segoe UI', 'Open Sans', sans-serif;
 }
-
-.main-wrapper {
+.main-wrapper{
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+}
+.top-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.sort-block {
+    display: flex;
+}
+.abv-sort-wrapper,
+.ibu-sort-wrapper{
+    width: 150px;
+    margin-right: 50px;
+    border-radius: 10px;
+    background-color: #aaaaaa;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.abv-sort__button-asc,
+.abv-sort__button-desc,
+.ibu-sort__button-asc,
+.ibu-sort__button-desc {
+    width: 30px;
+    display: inline-block;
+    height: 50%;
+    position: relative;
+    cursor: pointer;
+}
+.abv-sort__button-asc::before,
+.ibu-sort__button-asc::before{
+    content: "";
+    position: absolute;
+    border-bottom: solid #000000 10px;
+    border-left: solid transparent 10px;
+    border-right: solid transparent 10px;
+    top: 0;
+    left: 5px;
+}
+
+.abv-sort__button-desc::before,
+.ibu-sort__button-desc::before{
+    content: "";
+    position: absolute;
+    border-top: solid #000000 10px;
+    border-left: solid transparent 10px;
+    border-right: solid transparent 10px;
+    top: 0;
+    left: 5px;
+}
+
+.sort-buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-button{
+    border: solid #000000 1px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+.beer-list-wrapper {
+    width: 100%;
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -56,4 +126,5 @@ html {
     text-align: center;
     padding: 5px;
     position: relative;
+    cursor: pointer;
 }

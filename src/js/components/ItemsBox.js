@@ -6,37 +6,42 @@ export default class ItemsBox {
     this.beerList = beerList;
   }
 
-  updateList(list){
+  updateList(list) {
     this.beerList = list;
+    return this;
   }
 
-  getHtmlElements(){
-    return this.beerList.map((beerObject) => new BeerViewElement(beerObject).getElement());
+  getHtmlElements() {
+    return this.beerList.map(beerObject => new BeerViewElement(beerObject).getElement());
   }
 
-  renderElements(){
+  renderElements() {
     this.parrentNode.innerHTML = '';
     this.parrentNode.append(...this.getHtmlElements());
   }
 
-  rerender(){
+  rerender() {
     this.getHtmlElements();
     this.renderElements();
   }
 
-  sortByAbv(dir = 'asc'){
-    this.beerList.sort( (beerOne, beerTwo) => {
-      return dir === 'asc' ? 
-      beerOne.abv - beerTwo.abv:
-      beerTwo.abv - beerOne.abv;
+  sortByAbv(dir = 'asc') {
+    this.beerList.sort((beerOne, beerTwo) => {
+      return dir === 'asc' ?
+        beerOne.abv - beerTwo.abv :
+        beerTwo.abv - beerOne.abv;
     });
+
+    return this;
   }
 
-  sortByIbu(dir = 'asc'){
-    this.beerList.sort( (beerOne, beerTwo) => {
-      return dir === 'asc' ? 
-      beerOne.ibu - beerTwo.ibu:
-      beerTwo.ibu - beerOne.ibu;
+  sortByIbu(dir = 'asc') {
+    this.beerList.sort((beerOne, beerTwo) => {
+      return dir === 'asc' ?
+        beerOne.ibu - beerTwo.ibu :
+        beerTwo.ibu - beerOne.ibu;
     });
+
+    return this;
   }
 }

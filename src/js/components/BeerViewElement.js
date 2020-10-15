@@ -4,7 +4,6 @@ export default class BeerViewElement {
   constructor(beerObject) {
     this.beerObject = beerObject;
     this.createHTML();
-    this.setListener();
   }
 
   createHTML() {
@@ -25,7 +24,7 @@ export default class BeerViewElement {
     const itemAbv = createElWithClass('div', 'beer-item__abv');
     
     const abvTitle = createElWithClass('span', 'beer-item__abv-title');
-    abvTitle.innerText = 'ABV';
+    abvTitle.innerText = 'Alcohol';
 
     const abvValue = createElWithClass('span', 'beer-item__abv-value');
     abvValue.innerText = `${this.beerObject.abv}%`;
@@ -64,11 +63,5 @@ export default class BeerViewElement {
 
   getElement() {
     return this.itemWrapper;
-  }
-
-  setListener() {
-    this.itemWrapper.addEventListener('click', (event) => {
-      console.log(event.target);
-    });
   }
 }

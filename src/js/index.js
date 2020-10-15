@@ -1,18 +1,13 @@
 import 'regenerator-runtime/runtime';
 import BeerApiService from './api/BeerApiService.js';
-import ItemsBox from './components/ItemsBox.js';
+import UserInterface from './components/UserInterface.js';
 
 const beerApi = new BeerApiService();
 
 async function getBeerData() {
   const data = await beerApi.getData();
   const parrentNode = document.querySelector('.main-wrapper');
-  const itemsBox = new ItemsBox(parrentNode, data);
-  itemsBox.renderElements();
-  setTimeout(()=>{
-    itemsBox.sortByAbv();
-    itemsBox.rerender();
-  }, 5000)
+  const userInterface = new UserInterface(parrentNode);
 }
 
 getBeerData();
