@@ -3,6 +3,8 @@ import { createElWithClass } from '../helpers/createElWithClass.js';
 export default class BeerViewElement {
   constructor(beerObject) {
     this.beerObject = beerObject;
+    this.localStorage = window.localStorage;
+
     this.createHTML();
   }
 
@@ -22,7 +24,7 @@ export default class BeerViewElement {
     itemContributor.innerText = this.beerObject['contributed_by'];
 
     const itemAbv = createElWithClass('div', 'beer-item__abv');
-    
+
     const abvTitle = createElWithClass('span', 'beer-item__abv-title');
     abvTitle.innerText = 'Alcohol';
 
@@ -30,13 +32,13 @@ export default class BeerViewElement {
     abvValue.innerText = `${this.beerObject.abv}%`;
 
     const itemIbu = createElWithClass('div', 'beer-item__ibu');
-    
+
     const ibuTitle = createElWithClass('span', 'beer-item__ibu-title');
     ibuTitle.innerText = 'IBU';
 
     const ibuValue = createElWithClass('span', 'beer-item__ibu-value');
     ibuValue.innerText = this.beerObject.ibu;
-    
+
     const descLabel = createElWithClass('span', 'beer-item__description-label');
     descLabel.innerText = 'Description:';
 
@@ -44,18 +46,24 @@ export default class BeerViewElement {
     itemDesc.innerText = this.beerObject.description;
 
     const favoriteButton = createElWithClass('div', 'beer-item__favorite-button');
-    favoriteButton.innerText = 'Add to favorite';
+
+    if (this.localStorage[this.beerObject.id]) {
+      favoriteButton.classList.add('in-storage');
+      favoriteButton.innerText = 'Remove from favorite';
+    } else {
+      favoriteButton.innerText = 'Add to favorite';
+    }
 
     itemImageWrapper.append(itemImage);
     itemAbv.append(abvTitle, abvValue);
     itemIbu.append(ibuTitle, ibuValue);
     this.itemWrapper.append(
-      itemImageWrapper, 
-      itemName, 
-      itemContributor, 
-      itemAbv, 
+      itemImageWrapper,
+      itemName,
+      itemContributor,
+      itemAbv,
       itemIbu,
-      descLabel, 
+      descLabel,
       itemDesc,
       favoriteButton
     );

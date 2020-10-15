@@ -127,4 +127,9 @@ html {
     padding: 5px;
     position: relative;
     cursor: pointer;
+    transition: all .2s;
+}
+
+.beer-item__favorite-button.in-storage {
+    background-color: #aaaaaa;
 }

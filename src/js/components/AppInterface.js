@@ -6,6 +6,7 @@ export default class UserInterface {
   constructor(parrentNode) {
     this.parrentNode = parrentNode;
     this.beerApi = new BeerApiService();
+    this.localStorage = window.localStorage;
 
     this.createHtml();
     this.setListeners();
@@ -16,15 +17,19 @@ export default class UserInterface {
     const topPanel = createElWithClass('div', 'top-panel');
     const feedbackButton = createElWithClass('div', 'feedback-button');
     feedbackButton.innerText = 'Feedback';
-
-    this.listWrapper = createElWithClass('div', 'beer-list-wrapper');
     const buttonsWrapper = createElWithClass('span', 'sort-block');
 
-    this.beerListItems = new ItemsBox(this.listWrapper);
+    const listWrapper = createElWithClass('div', 'beer-list-wrapper');
+    const storageWrapper = createElWithClass('div', 'favorite-items-wrapper');
+    const contentBody = createElWithClass('div', 'content-body');
+
+    contentBody.append(listWrapper, storageWrapper);
+
+    this.beerListItems = new ItemsBox(listWrapper);
 
     buttonsWrapper.append(this.createSortButton('abv'), this.createSortButton('ibu'));
     topPanel.append(buttonsWrapper, feedbackButton);
-    mainWrapper.append(topPanel, this.listWrapper);
+    mainWrapper.append(topPanel, contentBody);
     this.parrentNode.append(mainWrapper);
 
     this.fulfillList();
@@ -53,6 +58,7 @@ export default class UserInterface {
   setListeners() {
     this.parrentNode.addEventListener('click', (event) => {
       const targetClass = event.target.classList[0];
+
       switch (targetClass) {
         case 'abv-sort__button-asc':
           this.sortBeerListAbvAsc();
@@ -65,6 +71,9 @@ export default class UserInterface {
           break;
         case 'ibu-sort__button-desc':
           this.sortBeerListIbuDesc();
+          break;
+        case 'beer-item__favorite-button':
+          this.favoriteAction(event.target);
           break;
       }
     })
@@ -86,4 +95,24 @@ export default class UserInterface {
     this.beerListItems.sortByIbu('desc').rerender();
   }
 
+  toggleFavorite(id) {
+    const parrentNode = Array.from(document.querySelectorAll('.beer-item')).filter(item => item.dataset.id === id)[0];
+    const beerName = parrentNode.querySelector('.beer-item__name').innerText;
+    const favButton = parrentNode.querySelector('.beer-item__favorite-button');
+
+    if (this.localStorage[id]) {
+      this.localStorage.removeItem(id);
+      favButton.classList.remove('in-storage');
+      favButton.innerText = 'Add to favorite';
+    } else {
+      this.localStorage.setItem(id, beerName);
+      favButton.innerText = 'Remove from favorite';
+      favButton.classList.add('in-storage');
+    }
+  }
+
+  favoriteAction(button){
+    const parrentNode = button.closest('.beer-item');
+    this.toggleFavorite(parrentNode.dataset.id);
+  }
 }
