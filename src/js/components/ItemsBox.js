@@ -15,14 +15,9 @@ export default class ItemsBox {
     return this.beerList.map(beerObject => new BeerViewElement(beerObject).getElement());
   }
 
-  renderElements() {
+  render() {
     this.parrentNode.innerHTML = '';
     this.parrentNode.append(...this.getHtmlElements());
-  }
-
-  rerender() {
-    this.getHtmlElements();
-    this.renderElements();
   }
 
   sortByAbv(dir = 'asc') {
@@ -31,8 +26,7 @@ export default class ItemsBox {
         beerOne.abv - beerTwo.abv :
         beerTwo.abv - beerOne.abv;
     });
-
-    return this;
+    this.render();
   }
 
   sortByIbu(dir = 'asc') {
@@ -42,6 +36,7 @@ export default class ItemsBox {
         beerTwo.ibu - beerOne.ibu;
     });
 
-    return this;
+    this.render();
   }
+
 }

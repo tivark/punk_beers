@@ -4,11 +4,13 @@ html {
     padding: 0;
     font-family: 'Segoe UI', 'Open Sans', sans-serif;
 }
-.main-wrapper{
+
+.main-wrapper {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
 }
+
 .top-panel {
     display: flex;
     justify-content: space-between;
@@ -19,8 +21,9 @@ html {
 .sort-block {
     display: flex;
 }
+
 .abv-sort-wrapper,
-.ibu-sort-wrapper{
+.ibu-sort-wrapper {
     width: 150px;
     margin-right: 50px;
     border-radius: 10px;
@@ -31,6 +34,7 @@ html {
     display: flex;
     justify-content: space-between;
 }
+
 .abv-sort__button-asc,
 .abv-sort__button-desc,
 .ibu-sort__button-asc,
@@ -41,8 +45,9 @@ html {
     position: relative;
     cursor: pointer;
 }
+
 .abv-sort__button-asc::before,
-.ibu-sort__button-asc::before{
+.ibu-sort__button-asc::before {
     content: "";
     position: absolute;
     border-bottom: solid #000000 10px;
@@ -53,7 +58,7 @@ html {
 }
 
 .abv-sort__button-desc::before,
-.ibu-sort__button-desc::before{
+.ibu-sort__button-desc::before {
     content: "";
     position: absolute;
     border-top: solid #000000 10px;
@@ -68,7 +73,7 @@ html {
     flex-direction: column;
 }
 
-.feedback-button{
+.feedback-button {
     border: solid #000000 1px;
     border-radius: 10px;
     padding: 10px;
@@ -76,12 +81,53 @@ html {
     cursor: pointer;
 }
 
-.beer-list-wrapper {
+.content-body {
+    display: flex;
     width: 100%;
+    justify-content: center;
+}
+
+.beer-list-wrapper {
+    width: 80%;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+.favorite-items-wrapper {
+    width: 20%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #bae4ff;
+    height: fit-content;
+    min-height: 5em;
+    transition: all .5s;
+}
+
+.favorite-items__clear-button {
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #00BCD4;
+}
+
+.favorite-items__clear-button.inactive {
+    display: none;
+}
+
+.favorite-items__title {
+    padding: 5px;
+    border-bottom: solid 1px #2196F3;
+    font-weight: 700;
+}
+
+.favorite-item {
+    display: flex;
+}
+
+.favorite-item__name {
+    width: 90%;
 }
 
 .beer-item {
@@ -107,10 +153,12 @@ html {
     height: 100%;
     margin: 0 auto;
 }
-.beer-item__description-label{
+
+.beer-item__description-label {
     font-weight: 700;
 }
-.beer-item__ibu{
+
+.beer-item__ibu {
     margin-bottom: 1em;
 }
 
@@ -120,7 +168,7 @@ html {
     margin-bottom: 1em;
 }
 
-.beer-item__favorite-button{
+.beer-item__favorite-button {
     border: solid #000000 1px;
     border-radius: 10px;
     text-align: center;

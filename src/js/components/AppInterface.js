@@ -1,6 +1,7 @@
-import { createElWithClass } from '../helpers/createElWithClass.js';
+import {createElWithClass} from '../helpers/createElWithClass.js';
 import BeerApiService from '../api/BeerApiService.js';
 import ItemsBox from './ItemsBox.js';
+import LocalStorageList from './LocalStorageList.js';
 
 export default class UserInterface {
   constructor(parrentNode) {
@@ -26,6 +27,7 @@ export default class UserInterface {
     contentBody.append(listWrapper, storageWrapper);
 
     this.beerListItems = new ItemsBox(listWrapper);
+    this.storageList = new LocalStorageList(storageWrapper);
 
     buttonsWrapper.append(this.createSortButton('abv'), this.createSortButton('ibu'));
     topPanel.append(buttonsWrapper, feedbackButton);
@@ -52,7 +54,8 @@ export default class UserInterface {
 
   async fulfillList() {
     const data = await this.beerApi.getData();
-    this.beerListItems.updateList(data).rerender();
+    this.beerListItems.updateList(data).render();
+    this.storageList.rerender();
   }
 
   setListeners() {
@@ -61,42 +64,31 @@ export default class UserInterface {
 
       switch (targetClass) {
         case 'abv-sort__button-asc':
-          this.sortBeerListAbvAsc();
+          this.beerListItems.sortByAbv();
           break;
         case 'abv-sort__button-desc':
-          this.sortBeerListAbvDesc();
+          this.beerListItems.sortByAbv('desc');
           break;
         case 'ibu-sort__button-asc':
-          this.sortBeerListIbuAsc();
+          this.beerListItems.sortByIbu();
           break;
         case 'ibu-sort__button-desc':
-          this.sortBeerListIbuDesc();
+          this.beerListItems.sortByIbu('desc');
           break;
         case 'beer-item__favorite-button':
           this.favoriteAction(event.target);
+          break;
+        case 'favorite-items__clear-button':
+          this.storageList.clear();
+          this.resetFavorites();
           break;
       }
     })
   }
 
-  sortBeerListAbvAsc() {
-    this.beerListItems.sortByAbv().rerender();
-  }
-
-  sortBeerListAbvDesc() {
-    this.beerListItems.sortByAbv('desc').rerender();
-  }
-
-  sortBeerListIbuAsc() {
-    this.beerListItems.sortByIbu().rerender();
-  }
-
-  sortBeerListIbuDesc() {
-    this.beerListItems.sortByIbu('desc').rerender();
-  }
-
   toggleFavorite(id) {
-    const parrentNode = Array.from(document.querySelectorAll('.beer-item')).filter(item => item.dataset.id === id)[0];
+    const parrentNode = Array.from(document.querySelectorAll('.beer-item'))
+      .filter(item => item.dataset.id === id)[0];
     const beerName = parrentNode.querySelector('.beer-item__name').innerText;
     const favButton = parrentNode.querySelector('.beer-item__favorite-button');
 
@@ -104,15 +96,27 @@ export default class UserInterface {
       this.localStorage.removeItem(id);
       favButton.classList.remove('in-storage');
       favButton.innerText = 'Add to favorite';
+      this.storageList.rerender();
     } else {
       this.localStorage.setItem(id, beerName);
       favButton.innerText = 'Remove from favorite';
       favButton.classList.add('in-storage');
+      this.storageList.rerender();
     }
   }
 
-  favoriteAction(button){
-    const parrentNode = button.closest('.beer-item');
-    this.toggleFavorite(parrentNode.dataset.id);
+  favoriteAction(button) {
+    const parentNode = button.closest('.beer-item');
+    this.toggleFavorite(parentNode.dataset.id);
+  }
+
+  resetFavorites() {
+    const favoriteButtons = Array.from(document.querySelectorAll('.beer-item__favorite-button'));
+    favoriteButtons.forEach(button => {
+      if (button.classList.contains('in-storage')){
+        button.classList.remove('in-storage');
+        button.innerText = 'Add to favorite';
+      }
+    });
   }
 }

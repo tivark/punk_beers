@@ -9,11 +9,24 @@ export default class LocalStorageItems{
   }
 
   createHtml(){
+    const favoriteTitle = createElWithClass('div', 'favorite-items__title');
+    favoriteTitle.innerText = 'Favorites';
+    this.parentNode.append(favoriteTitle);
+
     for(let i = 0; i < this.localStorage.length; i++){
       const id = this.localStorage.key(i);
-      const name = this.localStorage.getItem(i);
+      const name = this.localStorage.getItem(id);
       this.parentNode.append(this.createFavoriteItem(id, name));
     }
+
+    this.clearButton = createElWithClass('div', 'favorite-items__clear-button');
+    this.clearButton.innerText = 'Clear list';
+
+    if(this.localStorage.length === 0){
+      this.toggleClearButton();
+    }
+
+    this.parentNode.append(this.clearButton);
   }
 
   createFavoriteItem(id, name){
@@ -36,6 +49,11 @@ export default class LocalStorageItems{
 
   clear(){
     this.parentNode.innerHTML = '';
+    this.localStorage.clear();
+    this.rerender();
   }
 
+  toggleClearButton(){
+    this.clearButton.classList.toggle('inactive');
+  }
 }
