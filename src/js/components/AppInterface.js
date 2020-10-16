@@ -1,6 +1,6 @@
 import { createElWithClass } from '../helpers/helpers.js';
 import BeerApiService from '../api/BeerApiService.js';
-import ItemsBox from './ItemsBox.js';
+import BeerBox from './BeerBox.js';
 import LocalStorageList from './LocalStorageList.js';
 import TopPanel from './TopPanel.js';
 
@@ -25,7 +25,7 @@ export default class UserInterface {
 
     contentBody.append(listWrapper, storageWrapper);
 
-    this.beerListItems = new ItemsBox(listWrapper);
+    this.beerListItems = new BeerBox(listWrapper);
     this.storageList = new LocalStorageList(storageWrapper);
     this.topPanel = new TopPanel(mainWrapper);
     this.topPanel.setPageNum(this.currentPage);
