@@ -1,4 +1,4 @@
-import {createElWithClass} from '../helpers/createElWithClass.js';
+import { createElWithClass, setButtonEffect } from '../helpers/helpers.js';
 
 export default class LocalStorageItems{
   constructor(parentNode){
@@ -21,6 +21,7 @@ export default class LocalStorageItems{
 
     this.clearButton = createElWithClass('div', 'favorite-items__clear-button');
     this.clearButton.innerText = 'Clear list';
+    setButtonEffect(this.clearButton);
 
     if(this.localStorage.length === 0){
       this.toggleClearButton();

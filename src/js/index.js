@@ -4,10 +4,6 @@ import AppInterface from './components/AppInterface.js';
 
 const beerApi = new BeerApiService();
 
-async function getBeerData() {
-  const data = await beerApi.getData();
-  const parrentNode = document.querySelector('.main-wrapper');
-  const userInterface = new AppInterface(parrentNode);
-}
 
-getBeerData();
+const parentNode = document.querySelector('.main-wrapper');
+const appInterface = new AppInterface(parentNode);

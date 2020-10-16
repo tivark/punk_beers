@@ -1,4 +1,4 @@
-import { createElWithClass } from '../helpers/createElWithClass.js';
+import { createElWithClass, setButtonEffect } from '../helpers/helpers.js';
 
 export default class BeerViewElement {
   constructor(beerObject) {
@@ -12,7 +12,7 @@ export default class BeerViewElement {
     this.itemWrapper = createElWithClass('div', 'beer-item');
     this.itemWrapper.dataset.id = this.beerObject.id;
 
-    const itemImageWrapper = createElWithClass('div', 'berr-item__image-wrapper');
+    const itemImageWrapper = createElWithClass('div', 'beer-item__image-wrapper');
 
     const itemImage = createElWithClass('img', 'beer-item__image');
     itemImage.setAttribute('src', this.beerObject['image_url']);
@@ -46,6 +46,7 @@ export default class BeerViewElement {
     itemDesc.innerText = this.beerObject.description;
 
     const favoriteButton = createElWithClass('div', 'beer-item__favorite-button');
+    setButtonEffect(favoriteButton);
 
     if (this.localStorage[this.beerObject.id]) {
       favoriteButton.classList.add('in-storage');
