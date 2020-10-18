@@ -322,3 +322,21 @@ html {
 .message-content__close-button::after {
     transform: rotateZ(-45deg);
 }
+
+.feedback-form-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0, .5);
+}
+
+.feedback-form-layer .form-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translateX(-50%);
+    width: 450px;
+    background-color: #aaaaaa;
+}

@@ -3,7 +3,8 @@ import ApiService from '../api/ApiService.js';
 import BeerBox from './BeerBox.js';
 import LocalStorageList from './LocalStorageList.js';
 import TopPanel from './TopPanel.js';
-import MessagePopUp from "./MessagePopUp.js";
+import MessagePopUp from './MessagePopUp.js';
+import AutorizationForm from './AuthorizationForm.js';
 
 export default class UserInterface {
   constructor(parentNode) {
@@ -87,6 +88,9 @@ export default class UserInterface {
         case 'pagination__next-button':
           this.changePage(1);
           break;
+        case 'feedback-button':
+          this.regForm = new AutorizationForm();
+          break;
       }
     })
   }
@@ -152,7 +156,7 @@ export default class UserInterface {
     const success = await this.fulfillList();
 
     success ?
-      this.topPanel.setPageNum(this.currentPage):
+      this.topPanel.setPageNum(this.currentPage) :
       this.currentPage -= step;
   }
 }
