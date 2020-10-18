@@ -13,4 +13,23 @@ function setButtonEffect(element, color = '#ffffff'){
   });
 }
 
-export {createElWithClass, setButtonEffect}
+function createFormField({label, placeholder, prompt}){
+  const fieldsWrapper = createElWithClass('div', '')
+}
+
+function getClassFromLabel(label){
+  const words =  label.split(' ');
+  return words.length === 1 ?
+    words[0].toLocaleLowerCase() :
+    words.join('-').toLocaleLowerCase();
+}
+
+function getNameFromLabel(label){
+  const words =  label.split(' ');
+}
+
+export {
+  createElWithClass,
+  setButtonEffect,
+  createFormField
+}

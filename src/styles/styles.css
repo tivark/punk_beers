@@ -275,3 +275,50 @@ html {
     -o-box-shadow: inset 0 0 3px #000000;
     box-shadow: inset 0 0 3px #000000;
 }
+
+.message-error {
+    width: 250px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #b00020;
+    color: #ffffff;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    transition: all .2s;
+}
+
+.message-content {
+    position: relative;
+    width: 100%;
+}
+
+.message-content__close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.message-content__close-button::before,
+.message-content__close-button::after{
+    content: '';
+    display: block;
+    width: 20px;
+    border-bottom: solid #fff 3px;
+    transform: rotateZ(45deg);
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+.message-content__close-button::after {
+    transform: rotateZ(-45deg);
+}

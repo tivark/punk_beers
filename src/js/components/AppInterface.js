@@ -1,13 +1,14 @@
-import { createElWithClass } from '../helpers/helpers.js';
-import BeerApiService from '../api/BeerApiService.js';
+import {createElWithClass} from '../helpers/helpers.js';
+import ApiService from '../api/ApiService.js';
 import BeerBox from './BeerBox.js';
 import LocalStorageList from './LocalStorageList.js';
 import TopPanel from './TopPanel.js';
+import MessagePopUp from "./MessagePopUp.js";
 
 export default class UserInterface {
   constructor(parentNode) {
     this.parentNode = parentNode;
-    this.beerApi = new BeerApiService();
+    this.beerApi = new ApiService('https://api.punkapi.com/v2/beers');
     this.localStorage = window.localStorage;
     this.currentPage = 1;
     this.createHtml();
@@ -39,18 +40,24 @@ export default class UserInterface {
 
   async fulfillList() {
     try {
-      const data = await this.beerApi.getData(this.currentPage);
-      this.beerListItems.updateList(data).render();
-      this.topPanel.toggleNextButton(data.length);
+      this.beerApi.setParams(this.currentPage);
+      const data = await this.beerApi.get();
+
+      if (data) {
+        this.beerListItems.updateList(data).render();
+        this.topPanel.toggleNextButton(data.length);
+      }
+
+      return true;
     } catch (error) {
-      console.error(error.message);
+      this.popupMessage = new MessagePopUp(error);
+      return false;
     }
   }
 
   setListeners() {
     this.parentNode.addEventListener('click', (event) => {
       const targetClass = event.target.classList[0];
-
       switch (targetClass) {
         case 'abv-sort__button-asc':
           this.beerListItems.sortByAbv();
@@ -85,8 +92,8 @@ export default class UserInterface {
   }
 
   toggleFavorite(id) {
-  id in this.localStorage ?
-      this.removeFromFavorite(id):
+    id in this.localStorage ?
+      this.removeFromFavorite(id) :
       this.addFavoriteItem(id);
   }
 
@@ -95,7 +102,7 @@ export default class UserInterface {
       .filter(item => item.dataset.id === id)[0];
 
     const beerName = parentNode.querySelector('.beer-item__name').innerText;
-    const favButton = parentNode.querySelector('.beer-item__favorite-button');    
+    const favButton = parentNode.querySelector('.beer-item__favorite-button');
 
     favButton.innerText = 'Remove from favorite';
     favButton.classList.add('in-storage');
@@ -139,12 +146,13 @@ export default class UserInterface {
     this.toggleFavorite(id);
   }
 
-  changePage(dir) {
+  async changePage(dir) {
     const step = dir < 0 ? -1 : 1;
-
     this.currentPage += step;
-    this.topPanel.setPageNum(this.currentPage);
+    const success = await this.fulfillList();
 
-    this.fulfillList();
+    success ?
+      this.topPanel.setPageNum(this.currentPage):
+      this.currentPage -= step;
   }
 }
