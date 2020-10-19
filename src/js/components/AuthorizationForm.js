@@ -1,6 +1,6 @@
-import {createElWithClass, setButtonEffect} from "../helpers/helpers.js";
+import {createElWithClass} from "../helpers/helpers.js";
 
-export default class AutorizathionForm {
+export default class AutorizationForm {
   constructor() {
     this.phoneFieldsText = this.createTextObj('Phone number',
       'Enter your phone number',
@@ -11,7 +11,7 @@ export default class AutorizathionForm {
       'Enter your valid e-mail.');
 
     this.passwordFieldsText = this.createTextObj('Password',
-      'Enter your phone number',
+      'Enter your password',
       'At least 6 characters.');
 
     this.validFields = {
@@ -159,10 +159,10 @@ export default class AutorizathionForm {
     }
   }
 
-  removeForm(){
+  removeForm() {
     const mainForm = this.formLayer.querySelector('form');
     mainForm.style.transform = 'translateX(-50%) scale(0.1)';
-    setTimeout(()=>{
+    setTimeout(() => {
       this.formLayer.remove();
     }, 200);
   }
