@@ -337,7 +337,8 @@ html {
     position: relative;
     left: 50%;
     top: 25%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(.1);
+    transition: all .2s;
     width: 450px;
     background-color: #ffffff;
     border-radius: 3px;

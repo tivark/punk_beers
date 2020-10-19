@@ -73,7 +73,6 @@ export default class AutorizathionForm {
       textField.setAttribute('type', 'password');
     }
 
-
     const promptField = createElWithClass('span', `${fieldClassName}__prompt`);
     promptField.innerText = prompt;
 
@@ -83,46 +82,38 @@ export default class AutorizathionForm {
   }
 
   setListeners() {
-    const phoneInput = this.phoneField.querySelector('input');
-
-    phoneInput.addEventListener('input', (event) => {
+    this.formLayer.addEventListener('input', (event) => {
       const field = event.target;
-      const regexMatch = field.value.match(/\d{7,}/);
-      const isValid = (regexMatch != null) && (regexMatch[0] === field.value);
+      const fieldClassName = field.classList[0];
+      let isValid, fieldName, regexMatch;
 
-      this.setValidStatus('phone', field, isValid);
+      switch (fieldClassName) {
+        case 'phone-number__text':
+          regexMatch = field.value.match(/\d{7,}/);
+          isValid = (regexMatch != null) && (regexMatch[0] === field.value);
+          fieldName = 'phone';
+          break;
+        case 'e-mail__text':
+          const mailRegexp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+          regexMatch = field.value.match(mailRegexp);
+          isValid = (regexMatch != null) && (regexMatch[0] === field.value);
+          fieldName = 'email';
+          break;
+        case 'password__text':
+          isValid = (field.value.length >= 6);
+          fieldName = 'password';
+          break;
+      }
+      this.setValidStatus(fieldName, field, isValid);
       this.checkSubmitButtonStatus();
-    });
-
-    const mailInput = this.mailField.querySelector('input');
-
-    mailInput.addEventListener('input', (event) => {
-      const field = event.target;
-      const mailRegexp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
-      const regexMatch = field.value.match(mailRegexp);
-      const isValid = (regexMatch != null) && (regexMatch[0] === field.value);
-      this.setValidStatus('email', field, isValid);
-      this.checkSubmitButtonStatus();
-    });
-
-    const passwordInput = this.passwordField.querySelector('input');
-
-    passwordInput.addEventListener('input', (event) => {
-      const field = event.target;
-      const isValid = field.value.length >= 6;
-      this.setValidStatus('password', field, isValid);
-      this.checkSubmitButtonStatus();
-    });
-
-    this.cancelButton.addEventListener('click', () => {
-      this.formLayer.remove();
     });
 
     this.formLayer.addEventListener('click', (event) => {
-      if (event.target === event.currentTarget) {
-        this.formLayer.remove();
+      if ((event.target === event.currentTarget) ||
+        (event.target.classList[0] === 'form__cancel-button')) {
+        this.removeForm();
       }
-    })
+    });
   }
 
   createTextObj(labelText, placeholderText, promptText) {
@@ -141,6 +132,7 @@ export default class AutorizathionForm {
     this.createHtml();
     document.querySelector('body').append(this.formLayer);
     this.setListeners();
+    this.formLayer.querySelector('form').style.transform = 'translateX(-50%) scale(1)';
   }
 
   setValidStatus(fieldName, fieldNode, validStatus) {
@@ -165,5 +157,13 @@ export default class AutorizathionForm {
         this.submitButton.classList.add('disabled');
       }
     }
+  }
+
+  removeForm(){
+    const mainForm = this.formLayer.querySelector('form');
+    mainForm.style.transform = 'translateX(-50%) scale(0.1)';
+    setTimeout(()=>{
+      this.formLayer.remove();
+    }, 200);
   }
 }
