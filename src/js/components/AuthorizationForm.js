@@ -2,18 +2,6 @@ import {createElWithClass} from "../helpers/helpers.js";
 
 export default class AutorizationForm {
   constructor() {
-    this.phoneFieldsText = this.createTextObj('Phone number',
-      'Enter your phone number',
-      'Min 7 digits.');
-
-    this.mailFieldsText = this.createTextObj('E-mail',
-      'Enter your e-mail',
-      'Enter your valid e-mail.');
-
-    this.passwordFieldsText = this.createTextObj('Password',
-      'Enter your password',
-      'At least 6 characters.');
-
     this.validFields = {
       phone: false,
       email: false,
@@ -31,9 +19,21 @@ export default class AutorizationForm {
     mainForm.setAttribute('action', '');
     mainForm.setAttribute('id', 'reg-form');
 
-    this.phoneField = this.createFormField(this.phoneFieldsText);
-    this.mailField = this.createFormField(this.mailFieldsText);
-    this.passwordField = this.createFormField(this.passwordFieldsText);
+    const phoneFieldsText = new this.TextObj('Phone number',
+      'Enter your phone number',
+      'Min 7 digits.');
+
+    const mailFieldsText = new this.TextObj('E-mail',
+      'Enter your e-mail',
+      'Enter your valid e-mail.');
+
+    const passwordFieldsText = new this.TextObj('Password',
+      'Enter your password',
+      'At least 6 characters.');
+
+    this.phoneField = this.createFormField(phoneFieldsText);
+    this.mailField = this.createFormField(mailFieldsText);
+    this.passwordField = this.createFormField(passwordFieldsText);
     const buttonsWrapper = createElWithClass('span', 'form__buttons-wrapper');
 
     this.submitButton = createElWithClass('button', 'form__submit-button');
@@ -116,14 +116,6 @@ export default class AutorizationForm {
     });
   }
 
-  createTextObj(labelText, placeholderText, promptText) {
-    return {
-      'label': labelText,
-      'placeholder': placeholderText,
-      'prompt': promptText
-    };
-  }
-
   labelToClassName(label) {
     return label.toLowerCase().replaceAll(/\s/g, '-');
   }
@@ -165,5 +157,11 @@ export default class AutorizationForm {
     setTimeout(() => {
       this.formLayer.remove();
     }, 200);
+  }
+
+  TextObj(labelText, placeholderText, promptText) {
+    this.label = labelText;
+    this.placeholder = placeholderText;
+    this.prompt = promptText
   }
 }
