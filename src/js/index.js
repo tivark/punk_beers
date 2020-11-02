@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import AppInterface from './components/AppInterface.js';
 
 

@@ -13,8 +13,7 @@
     "url": "https://github.com/tivark/punk_beers/issues"
   },
   "homepage": "https://github.com/tivark/punk_beers#readme",
-  "dependencies": {},
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.3.1"
   }
 }
