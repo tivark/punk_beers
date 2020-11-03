@@ -1,4 +1,4 @@
-import {createElWithClass} from "../helpers/helpers.js";
+import { createElWithClass } from "../helpers/helpers.js";
 
 export default class AutorizationForm {
   constructor() {
@@ -19,17 +19,23 @@ export default class AutorizationForm {
     mainForm.setAttribute('action', '');
     mainForm.setAttribute('id', 'reg-form');
 
-    const phoneFieldsText = new this.TextObj('Phone number',
-      'Enter your phone number',
-      'Min 7 digits.');
+    const phoneFieldsText = {
+      label: 'Phone number',
+      placeholder: 'Enter your phone number',
+      prompt: 'Min 7 digits.'
+    }
 
-    const mailFieldsText = new this.TextObj('E-mail',
-      'Enter your e-mail',
-      'Enter your valid e-mail.');
+    const mailFieldsText = {
+      label: 'E-mail',
+      placeholder: 'Enter your e-mail',
+      prompt: 'Enter your valid e-mail.'
+    };
 
-    const passwordFieldsText = new this.TextObj('Password',
-      'Enter your password',
-      'At least 6 characters.');
+    const passwordFieldsText = {
+      label: 'Password',
+      placeholder: 'Enter your password',
+      prompt: 'At least 6 characters.'
+    };
 
     this.phoneField = this.createFormField(phoneFieldsText);
     this.mailField = this.createFormField(mailFieldsText);
@@ -59,7 +65,7 @@ export default class AutorizationForm {
     this.formLayer.append(mainForm);
   }
 
-  createFormField({label, placeholder, prompt}) {
+  createFormField({ label, placeholder, prompt }) {
     const fieldClassName = this.labelToClassName(label);
     const fieldWrapper = createElWithClass('div', `${fieldClassName}-field`);
     const labelTag = createElWithClass('label', `${fieldClassName}__label`);
@@ -136,7 +142,7 @@ export default class AutorizationForm {
   }
 
   checkSubmitButtonStatus() {
-    const {phone, email, password} = this.validFields;
+    const { phone, email, password } = this.validFields;
 
     if (phone && email && password) {
       this.submitButton.removeAttribute('disabled');
@@ -157,11 +163,5 @@ export default class AutorizationForm {
     setTimeout(() => {
       this.formLayer.remove();
     }, 200);
-  }
-
-  TextObj(labelText, placeholderText, promptText) {
-    this.label = labelText;
-    this.placeholder = placeholderText;
-    this.prompt = promptText
   }
 }
