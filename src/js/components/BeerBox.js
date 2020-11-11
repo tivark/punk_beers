@@ -22,9 +22,9 @@ export default class ItemsBox {
 
   sortByAbv(dir = 'asc') {
     this.beerList.sort((beerOne, beerTwo) => {
-      return dir === 'asc' ?
-        beerOne.abv - beerTwo.abv :
-        beerTwo.abv - beerOne.abv;
+      return dir === 'asc'
+        ? beerOne.abv - beerTwo.abv 
+        : beerTwo.abv - beerOne.abv;
     });
     this.render();
   }

@@ -2,10 +2,11 @@ export default class ApiService {
   constructor(url) {
     this.URL = url;
     this.params = '';
+    this.perPage = 24;
   }
 
-  setParams(page = 1, perPage = 24) {
-    this.params = `?page=${page}&per_page=${perPage}`;
+  setParams(page = 1) {
+    this.params = `?page=${page}&per_page=${this.perPage}`;
   }
 
   async get() {
